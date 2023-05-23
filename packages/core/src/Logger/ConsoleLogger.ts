@@ -76,6 +76,7 @@ export class ConsoleLogger implements Logger {
 	 */
 	_log(type: LOG_TYPE | string, ...msg) {
 		let logger_level_name = this.level;
+		console.log("Application debugging begins: ");
 		if (ConsoleLogger.LOG_LEVEL) {
 			logger_level_name = ConsoleLogger.LOG_LEVEL;
 		}
