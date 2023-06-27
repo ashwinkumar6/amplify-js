@@ -1,1 +1,47 @@
-
+name: Callable e2e
+on: [push]
+jobs:
+  read-integ-config:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{env.INTEG_CONFIG}}
+    steps:
+      - uses: actions/checkout@v2
+      - run: pwd
+      - run: ls -a
+      - run: echo "INTEG_CONFIG=$(jq -c . < .github/workflows/integ-config.json)" >> $GITHUB_ENV
+      - run: echo ${{env.INTEG_CONFIG}}
+      - run: echo '${{fromJson(env.INTEG_CONFIG) }}'
+​
+  cypress:
+    name: Cypress Tests
+    needs: read-integ-config
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        BROWSER: [chrome]
+        integ-config: ${{ fromJson(needs.read-integ-config.outputs.matrix) }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+      - name: Set up Node
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
+        with:
+          node-version: 16
+          cache: 'yarn'
+          build: npm run build
+          start: npm start
+          wait-on: 'http://localhost:3000'
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
+      - name: Install dependencies
+        run: yarn
+      - name: Start React GraphQL API sample and run Cypress on ${{ matrix.BROWSER }}
+        run: |
+          yarn ci:test \
+          ${{ matrix.integ-config.framework }} \
+          ${{ matrix.integ-config.category }} \
+          ${{ matrix.integ-config.sample_name }} \
+          ${{ matrix.integ-config.spec }} \
+          ${{ matrix.BROWSER }} \
