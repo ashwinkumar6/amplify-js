@@ -1,5 +1,5 @@
 on: [push]
-#test
+
 jobs:
   prebuild:
     runs-on: ubuntu-latest
