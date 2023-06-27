@@ -26,5 +26,5 @@ jobs:
 
   e2e:
     needs: prebuild
-    uses: ./.github/workflows/callable-e2e-example.yml
+    uses: ./.github/workflows/callable-e2e.yml
     secrets: inherit
