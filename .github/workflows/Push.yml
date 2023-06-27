@@ -1,4 +1,4 @@
-name: Push Validation #test
+name: Push Validation 
 on: [push]
 jobs:
   prebuild:
