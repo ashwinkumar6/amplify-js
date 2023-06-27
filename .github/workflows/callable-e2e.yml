@@ -1,46 +1,56 @@
-name: Callable e2e
-on: [push]
+on:
+  workflow_call:
+    secrets:
+      GH_PAT:
+        required: true
+env:
+  NPM_REGISTRY: http://localhost:4873/
+  NPM_USER: circleci
+  NPM_PASS: circleci
+  NPM_EMAIL: circleci@amplify.js
+
 jobs:
-  read-integ-config:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{env.INTEG_CONFIG}}
-    steps:
-      - uses: actions/checkout@v2
-      - run: pwd
-      - run: ls -a
-      - run: echo "INTEG_CONFIG=$(jq -c . < .github/workflows/integ-config.json)" >> $GITHUB_ENV
-      - run: echo ${{env.INTEG_CONFIG}}
-      - run: echo '${{fromJson(env.INTEG_CONFIG) }}'
-  cypress:
-    name: Cypress Tests
-    needs: read-integ-config
+  e2e-tests:
+    name: Runs E2E tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        BROWSER: [chrome]
-        integ-config: ${{ fromJson(needs.read-integ-config.outputs.matrix) }}
+        BROWSER: [chrome, firefox]
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
-      - name: Set up Node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
-        with:
-          node-version: 16
-          cache: 'yarn'
-          build: npm run build
-          start: npm start
-          wait-on: 'http://localhost:3000'
-        env:
-          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
-      - name: Install dependencies
-        run: yarn
-      - name: Start React GraphQL API sample and run Cypress on ${{ matrix.BROWSER }}
+      - name: Where we at?
         run: |
-          yarn ci:test \
-          ${{ matrix.integ-config.framework }} \
-          ${{ matrix.integ-config.category }} \
-          ${{ matrix.integ-config.sample_name }} \
-          ${{ matrix.integ-config.spec }} \
-          ${{ matrix.BROWSER }} \
+          pwd
+          ls
+      - name: Checkout repository
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f # v3.4.0 https://github.com/actions/checkout/commit/24cb9080177205b6e8c946b17badbe402adc938f
+        with:
+          # Minimal depth 2 so we can checkout the commit before possible merge commit.
+          fetch-depth: 2
+          path: aws-amplify
+      - name: Where we at?
+        run: |
+          pwd
+          ls
+      - name: Setup node and build the repository
+        uses: ./aws-amplify/.github/actions/node-and-build
+      - name: Checkout staging repo
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+        with:
+          repository: stocaaro/amplify-js-samples-staging
+          path: aws-amplify-staging
+          token: ${{ secrets.GH_PAT }}
+          fetch-depth: 2
+      - name: Where we at?
+        run: |
+          pwd
+          ls
+      - name: Prepare staging repo
+        run: |
+          yarn
+        working-directory: ./aws-amplify-staging
+      - name: Start verdaccio
+        run: |
+          npx verdaccio@5.25.0 &
+          sleep 15 # TODO waits until verdaccio is up and running
+      - name: Publish to verdaccio
+        run: |
