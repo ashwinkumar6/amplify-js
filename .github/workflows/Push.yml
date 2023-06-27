@@ -1,7 +1,7 @@
-name: Push Validation 
 on:
   push:
-      branches: ['main']
+    branches: ['example-e2e']
+
 jobs:
   prebuild:
     runs-on: ubuntu-latest
@@ -9,13 +9,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f # v3.4.0 https://github.com/actions/checkout/commit/24cb9080177205b6e8c946b17badbe402adc938f
         with:
+          # Minimal depth 2 so we can checkout the commit before possible merge commit.
           fetch-depth: 2
           path: aws-amplify
       - name: Setup node and build the repository
         uses: ./aws-amplify/.github/actions/node-and-build
+  test-checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout stating repo
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+        with:
+          repository: yingku/amplify-js-samples-staging
+          path: aws-amplify-staging
+          token: ${{ secrets.GH_ACTIONS}} 
+
   e2e:
     needs: prebuild
-    uses: ./.github/workflows/callable-e2e.yml
-  bundle-size-tests:
-    needs: prebuild
-    uses: ./.github/workflows/callable-bundle-size-tests.yml
+    uses: ./.github/workflows/callable-e2e-example.yml
+    secrets: inherit
