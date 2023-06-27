@@ -29,6 +29,25 @@
 		"publish:release": "lerna publish --conventional-commits --yes --message 'chore(release): Publish [ci skip]' --no-verify-access",
 		"publish:verdaccio": "lerna publish --no-push --canary minor --dist-tag=unstable --preid=unstable --exact --force-publish --yes --no-verify-access",
 		"ts-coverage": "lerna run ts-coverage"
+
+		"cypress:angular": "cypress run --config baseUrl=http://localhost:4200",
+		"cypress:vue": "cypress run --config baseUrl=http://localhost:8080",
+		"cypress:react": "cypress run --config baseUrl=http://localhost:3000",
+		"cypress:stencil": "cypress run --config baseUrl=http://localhost:3333",
+		"cypress:vite": "cypress run --config baseUrl=http://localhost:3000",
+		"cypress:open:angular": "cypress open --config baseUrl=http://localhost:4200",
+		"cypress:open:vue": "cypress open --config baseUrl=http://localhost:8080",
+		"cypress:open:react": "cypress open --config baseUrl=http://localhost:3000",
+		"cypress:open:javascript": "cypress open --config baseUrl=http://localhost:3000",
+		"cypress:open:stencil": "cypress open --config baseUrl=http://localhost:3333",
+		"cypress:open:ionic": "cypress open --config baseUrl=http://localhost:8100",
+		"cypress:open:vite": "cypress open --config baseUrl=http://localhost:3000",
+		"cypress:open:rollup": "cypress open --config baseUrl=http://localhost:3000",
+		"concurrently": "concurrently",
+		"ci:start": "sh -c 'yarn --cwd samples/${0}/${1}/${2} && yarn --cwd samples/${0}/${1}/${2} start'",
+		"ci:test": "node scripts/test.js",
+		"test": "node scripts/test.js",
+		"publish-sample": "node scripts/publish-sample.js"
 	},
 	"husky": {
 		"hooks": {
@@ -104,9 +123,42 @@
 		"webpack-cli": "^5.0.0",
 		"winston": "^3.2.1",
 		"wml": "0.0.83"
+
+		"@testing-library/cypress": "^9.0.0",
+		"@types/mocha": "^8.2.2",
+		"ansi-regex": "^5.0.1",
+		"concurrently": "^5.1.0",
+		"cypress": "^12.4.1",
+		"cypress-file-upload": "^5.0.8",
+		"cypress-pipe": "^2.0.0",
+		"cypress-plugin-snapshots": "^1.4.4",
+		"diff": "^5.0.0",
+		"fs-extra": "^9.0.1",
+		"glob": "^7.1.6",
+		"idb": "^5.0.4",
+		"jpeg-js": "^0.4.3",
+		"jwt-decode": "^3.1.2",
+		"merge": "^2.1.1",
+		"playwright-webkit": "1.34.2",
+		"serve": "13.0.4",
+		"simple-git": "^3.16.0",
+		"tmp": "^0.2.1",
+		"typescript": "^4.2.4",
+		"wait-on": "^4.0.0"
 	},
 	"jest": {
 		"resetMocks": true,
 		"verbose": true
+	}
+	"dependencies": {
+		"@apollo/client": "^3.4.15",
+		"@playwright/test": "1.34.2",
+		"graphql": "^15.6.0"
+	},
+	"resolutions": {
+		"diff": "^5.0.0",
+		"jpeg-js": "^0.4.3",
+		"merge": "^2.1.1",
+		"ansi-regex": "^5.0.1"
 	}
 }
