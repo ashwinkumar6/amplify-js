@@ -1,5 +1,7 @@
 name: Push Validation 
-on: [push]
+on:
+  push:
+      branches: ['main']
 jobs:
   prebuild:
     runs-on: ubuntu-latest
