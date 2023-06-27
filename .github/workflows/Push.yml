@@ -22,7 +22,7 @@ jobs:
         with:
           repository: yingku/amplify-js-samples-staging
           path: aws-amplify-staging
-          token: ${{ secrets.GH_ACTIONS || github.token }} 
+          token: ${{ secrets.GH_ACTIONS }} 
 
   e2e:
     needs: prebuild
