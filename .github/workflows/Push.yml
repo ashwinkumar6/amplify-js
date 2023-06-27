@@ -17,12 +17,12 @@ jobs:
   test-checkout:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout stating repo
+      - name: Checkout staging repo
         uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
         with:
           repository: yingku/amplify-js-samples-staging
           path: aws-amplify-staging
-          token: ${{ secrets.GH_ACTIONS }} 
+          token: ${{ secrets.GH_ACTIONS || github.token }} 
 
   e2e:
     needs: prebuild
