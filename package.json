@@ -46,7 +46,6 @@
 		"concurrently": "concurrently",
 		"ci:start": "sh -c 'yarn --cwd samples/${0}/${1}/${2} && yarn --cwd samples/${0}/${1}/${2} start'",
 		"ci:test": "node scripts/test.js",
-		"test": "node scripts/test.js",
 		"publish-sample": "node scripts/publish-sample.js"
 	},
 	"husky": {
@@ -149,7 +148,7 @@
 	"jest": {
 		"resetMocks": true,
 		"verbose": true
-	}
+	},
 	"dependencies": {
 		"@apollo/client": "^3.4.15",
 		"@playwright/test": "1.34.2",
