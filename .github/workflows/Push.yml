@@ -22,4 +22,4 @@ jobs:
       - prebuild
       - prebuild-samples-staging
     secrets: inherit
-    uses: ./.github/workflows/callable-e2e-example.yml
+    uses: ./.github/workflows/callable-e2e.yml
