@@ -4,11 +4,11 @@ on:
       GH_ACTIONS:
         required: true
 
-env:
-  NPM_REGISTRY: http://localhost:4873/
-  NPM_USER: circleci
-  NPM_PASS: circleci
-  NPM_EMAIL: circleci@amplify.js
+# env:
+#   NPM_REGISTRY: http://localhost:4873/
+#   NPM_USER: circleci
+#   NPM_PASS: circleci
+#   NPM_EMAIL: circleci@amplify.js
 
 jobs:
   e2e-tests:
@@ -51,13 +51,9 @@ jobs:
           token: ${{ secrets.GH_ACTIONS }}
           fetch-depth: 2
       - name: Set up Node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
         with:
           node-version: 16
-          cache: 'yarn'
-          build: npm run build
-          start: npm start
-          wait-on: 'http://localhost:3000'
         env:
           SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
       - name: Prepare staging repo
