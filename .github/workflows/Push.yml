@@ -1,6 +1,6 @@
 on:
   push:
-    branches: ['example-e2e']
+    branches: [main]
 
 jobs:
   prebuild:
