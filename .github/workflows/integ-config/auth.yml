@@ -1,0 +1,9 @@
+# angular
+- framework: angular
+  category: auth
+  sample_name: amplify-authenticator
+  spec: ui-amplify-authenticator
+# - framework: angular
+#   category: auth
+#   sample_name: amplify-authenticator
+#   spec: custom-authenticator

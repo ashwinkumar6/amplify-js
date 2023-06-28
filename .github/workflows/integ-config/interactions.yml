@@ -1,0 +1,10 @@
+# Angular
+- framework: angular
+  category: interactions
+  sample_name: chatbot-component
+  spec: chatbot-component
+# # React
+# - framework: react
+#   category: interactions
+#   sample_name: chatbot-component
+#   spec: chatbot-component
