@@ -1,7 +1,7 @@
 on:
   workflow_call:
     secrets:
-      GH_PAT:
+      GH_ACTIONS:
         required: true
 env:
   NPM_REGISTRY: http://localhost:4873/
