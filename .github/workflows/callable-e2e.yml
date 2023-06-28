@@ -3,6 +3,7 @@ on:
     secrets:
       GH_ACTIONS:
         required: true
+
 env:
   NPM_REGISTRY: http://localhost:4873/
   NPM_USER: circleci
@@ -13,26 +14,31 @@ jobs:
   e2e-tests:
     name: Runs E2E tests
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         BROWSER: [chrome, firefox]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f # v3.4.0 https://github.com/actions/checkout/commit/24cb9080177205b6e8c946b17badbe402adc938f
+        with:
+          # Minimal depth 2 so we can checkout the commit before possible merge commit.
+          fetch-depth: 2
+          path: aws-amplify
       - name: Setup node and build the repository
         uses: ./aws-amplify/.github/actions/node-and-build
-      - name: Checkout staging repo
-        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+      - name: Setup samples staging repository
+        uses: ./aws-amplify/.github/actions/setup-samples-staging
         with:
-          repository: yingku/amplify-js-samples-staging
-          path: aws-amplify-staging
-          token: ${{ secrets.GH_ACTIONS }}
-          fetch-depth: 2
-      - name: Prepare staging repo
+          GH_ACTIONS: ${{ secrets.GH_ACTIONS }}
+      - name: Load Verdaccio with AmplifyJs
+        uses: ./aws-amplify/.github/actions/load-verdaccio-with-amplify-js
+      - name: Where am I?
         run: |
-          yarn
-        working-directory: ./aws-amplify-staging
-      - name: Start verdaccio
+          pwd; ls
+        shell: bash
+      - name: Run E2E test
         run: |
-          npx verdaccio@5.25.0 &
-          sleep 15 # TODO waits until verdaccio is up and running
-      - name: Publish to verdaccio
-        run: |
+          ../aws-amplify/.circleci/retry-yarn-script.sh -s 'ci:test react storage storageApp storage ${{ matrix.BROWSER }}'
+        working-directory: amplify-js-samples-staging
+        shell: bash
