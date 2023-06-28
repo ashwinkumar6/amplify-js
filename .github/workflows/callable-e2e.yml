@@ -27,18 +27,35 @@ jobs:
       #     path: aws-amplify
       # - name: Setup node and build the repository
       #   uses: ./aws-amplify/.github/actions/node-and-build
-      - name: Setup samples staging repository
-        uses: ./aws-amplify/.github/actions/setup-samples-staging
-        with:
-          GH_ACTIONS: ${{ secrets.GH_ACTIONS }}
+      # - name: Setup samples staging repository
+      #   uses: ./aws-amplify/.github/actions/setup-samples-staging
+      #   with:
+      #     GH_ACTIONS: ${{ secrets.GH_ACTIONS }}
       # - name: Load Verdaccio with AmplifyJs
       #   uses: ./aws-amplify/.github/actions/load-verdaccio-with-amplify-js
       # - name: Where am I?
       #   run: |
       #     pwd; ls
       #   shell: bash
+      # - name: Run E2E test
+      #   run: |
+      #     ../aws-amplify/.circleci/retry-yarn-script.sh -s 'ci:test react storage storageApp storage ${{ matrix.BROWSER }}'
+      #   working-directory: amplify-js-samples-staging
+      #   shell: bash
+
+      - name: Checkout staging repo
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+        with:
+          repository: yingku/amplify-js-samples-staging
+          path: aws-amplify-staging
+          token: ${{ secrets.GH_ACTIONS }}
+          fetch-depth: 2
+      - name: Prepare staging repo
+        run: |
+          yarn
+        working-directory: ./aws-amplify-staging
       - name: Run E2E test
         run: |
           ../aws-amplify/.circleci/retry-yarn-script.sh -s 'ci:test react storage storageApp storage ${{ matrix.BROWSER }}'
-        working-directory: amplify-js-samples-staging
+        working-directory: ./aws-amplify-staging
         shell: bash
