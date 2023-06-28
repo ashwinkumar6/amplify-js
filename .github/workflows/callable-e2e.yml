@@ -43,6 +43,7 @@ jobs:
 
       - name: read integ config files
         run: echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
+        working-directory: ./aws-amplify-staging
 
   cypress:
     name: Cypress Tests
