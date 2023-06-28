@@ -73,6 +73,7 @@ jobs:
           SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
       - name: Prepare staging repo
         run: |
+          pwd
           yarn
         working-directory: ./aws-amplify-staging
       - name: run the integ test
