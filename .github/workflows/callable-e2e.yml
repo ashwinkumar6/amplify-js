@@ -83,3 +83,4 @@ jobs:
           ${{ matrix.integ-config.sample_name }} \
           ${{ matrix.integ-config.spec }} \
           ${{ matrix.BROWSER }} \
+        working-directory: ./aws-amplify-staging
