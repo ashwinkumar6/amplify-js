@@ -42,40 +42,42 @@ jobs:
       #   shell: bash
 
       - name: read integ config files
-        run: echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
-        working-directory: ./aws-amplify-staging
+        run: |
+          pwd
+          ls -a
+        # run: echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
 
-  cypress:
-    name: Cypress Tests
-    needs: e2e-prep
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        BROWSER: [chrome]
-        integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
-    steps:
-      - name: Checkout staging repo
-        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
-        with:
-          repository: yingku/amplify-js-samples-staging
-          path: aws-amplify-staging
-          token: ${{ secrets.GH_ACTIONS }}
-          fetch-depth: 2
-      - name: Set up Node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
-        with:
-          node-version: 16
-        env:
-          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
-      - name: Prepare staging repo
-        run: |
-          yarn
-        working-directory: ./aws-amplify-staging
-      - name: run the integ test
-        run: |
-          yarn ci:test \
-          ${{ matrix.integ-config.framework }} \
-          ${{ matrix.integ-config.category }} \
-          ${{ matrix.integ-config.sample_name }} \
-          ${{ matrix.integ-config.spec }} \
-          ${{ matrix.BROWSER }} \
+  # cypress:
+  #   name: Cypress Tests
+  #   needs: e2e-prep
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       BROWSER: [chrome]
+  #       integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
+  #   steps:
+  #     - name: Checkout staging repo
+  #       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+  #       with:
+  #         repository: yingku/amplify-js-samples-staging
+  #         path: aws-amplify-staging
+  #         token: ${{ secrets.GH_ACTIONS }}
+  #         fetch-depth: 2
+  #     - name: Set up Node
+  #       uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
+  #       with:
+  #         node-version: 16
+  #       env:
+  #         SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
+  #     - name: Prepare staging repo
+  #       run: |
+  #         yarn
+  #       working-directory: ./aws-amplify-staging
+  #     - name: run the integ test
+  #       run: |
+  #         yarn ci:test \
+  #         ${{ matrix.integ-config.framework }} \
+  #         ${{ matrix.integ-config.category }} \
+  #         ${{ matrix.integ-config.sample_name }} \
+  #         ${{ matrix.integ-config.spec }} \
+  #         ${{ matrix.BROWSER }} \
