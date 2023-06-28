@@ -43,8 +43,11 @@ jobs:
 
       - name: checkout AmplifyJs
         uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+        with:
+          path: amplify-js
       - name: read integ config files
         run: echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
+        working-directory: ./amplify-js
 
   cypress:
     name: Cypress Tests
