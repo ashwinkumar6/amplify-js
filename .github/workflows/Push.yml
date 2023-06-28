@@ -1,4 +1,4 @@
-on: [push] #test
+on: [push] 
 
 jobs:
   prebuild:
