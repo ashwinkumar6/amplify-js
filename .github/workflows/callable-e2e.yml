@@ -41,8 +41,13 @@ jobs:
       #   working-directory: amplify-js-samples-staging
       #   shell: bash
 
+      - name: checkout AmplifyJs
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
       - name: read integ config files
         run: |
+          pwd
+          ls -a
+          cd .github/workflows
           pwd
           ls -a
         # run: echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
