@@ -27,6 +27,7 @@ jobs:
         run: |
           pwd
           ls -a
+          echo ${{ cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c . }}
           echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
           echo ${{env.INTEG_CONFIG}}
         working-directory: ./amplify-js
