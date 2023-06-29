@@ -27,10 +27,15 @@ jobs:
         run: |
           pwd
           ls -a
-          cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .
           echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
-          echo ${{env.INTEG_CONFIG}}
         working-directory: ./amplify-js
+
+  test-config:
+    name: Get required configs to run e2e tests
+    runs-on: ubuntu-latest
+    needs: e2e-prep
+    steps:
+      - run: echo ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
 
   # e2e-test-runner:
   #   name: e2e test runnner
