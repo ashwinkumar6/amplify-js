@@ -24,4 +24,4 @@ jobs:
     #   - prebuild
     #   - prebuild-samples-staging
     uses: ./.github/workflows/callable-e2e-runner.yml
-    # secrets: inherit
+    secrets: inherit
