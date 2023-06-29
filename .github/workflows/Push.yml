@@ -18,9 +18,18 @@ jobs:
   #   secrets: inherit
   #   uses: ./.github/workflows/callable-prebuild-samples-staging.yml
 
-  e2e:
-    # needs:
-    #   - prebuild
-    #   - prebuild-samples-staging
-    # secrets: inherit
-    uses: ./.github/workflows/callable-e2e.yml
+  test-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: |
+          pwd
+          pwd
+          ls -a
+
+  # e2e:
+  #   # needs:
+  #   #   - prebuild
+  #   #   - prebuild-samples-staging
+  #   # secrets: inherit
+  #   uses: ./.github/workflows/callable-e2e.yml
