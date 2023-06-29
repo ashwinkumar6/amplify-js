@@ -35,13 +35,21 @@ jobs:
     name: Run E2E test
     runs-on: ubuntu-latest
     steps:
+      - name: check incoming config
+        run: |
+          echo 
+          ${{ matrix.integ-config.framework }} \
+          ${{ matrix.integ-config.category }} \
+          ${{ matrix.integ-config.sample_name }} \
+          ${{ matrix.integ-config.spec }} \
+          ${{ matrix.integ-config.browser }} \
+          
       - name: Checkout staging repo
         uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
         with:
           repository: yingku/amplify-js-samples-staging
           path: aws-amplify-staging
           token: ${{ secrets.GH_ACTIONS }}
-          fetch-depth: 2
 
       - name: Set up Node
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
@@ -57,7 +65,7 @@ jobs:
           ${{ matrix.integ-config.category }} \
           ${{ matrix.integ-config.sample_name }} \
           ${{ matrix.integ-config.spec }} \
-          ${{ matrix.BROWSERSSS }} \
+          ${{ matrix.integ-config.browser }} \
         working-directory: ./aws-amplify-staging
 
       # - name: Install ${{ inputs.test_name }} >> sample
