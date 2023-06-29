@@ -24,32 +24,21 @@ jobs:
         with:
           path: amplify-js
       - name: read integ config files
-        run: |
-          pwd
-          ls -a
-          echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
+        run: echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
         working-directory: ./amplify-js
 
-  test-config:
-    name: Get required configs to run e2e tests
-    runs-on: ubuntu-latest
+  e2e-test-runner:
+    name: e2e test runnner
     needs: e2e-prep
-    steps:
-      - run: echo ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
-      - run: echo ${{ needs.e2e-prep.outputs.integ-config }}
-
-  # e2e-test-runner:
-  #   name: e2e test runnner
-  #   needs: e2e-prep
-  #   # secrets: inherit
-  #   strategy:
-  #     matrix:
-  #       integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
-  #   uses: ./.github/workflows/callable-e2e-tests.yml
-  #   with:
-  #     test_name: ${{ matrix.integ-config.test_name }}
-  #     framework: ${{ matrix.integ-config.framework }}
-  #     category: ${{ matrix.integ-config.category }}
-  #     sample_name: ${{ matrix.integ-config.sample_name }}
-  #     spec: ${{ matrix.integ-config.spec }}
-  #     browser: ${{ matrix.integ-config.browser }}
+    # secrets: inherit
+    strategy:
+      matrix:
+        integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
+    uses: ./.github/workflows/callable-e2e-tests.yml
+    with:
+      test_name: ${{ matrix.integ-config.test_name }}
+      framework: ${{ matrix.integ-config.framework }}
+      category: ${{ matrix.integ-config.category }}
+      sample_name: ${{ matrix.integ-config.sample_name }}
+      spec: ${{ matrix.integ-config.spec }}
+      browser: ${{ matrix.integ-config.browser }}
