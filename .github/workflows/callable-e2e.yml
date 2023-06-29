@@ -65,7 +65,7 @@ jobs:
       - name: Checkout staging repo
         uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
         with:
-          repository: yingku/amplify-js-samples-staging
+          repository: ashwinkumar6/amplify-js-samples-staging
           path: aws-amplify-staging
           token: ${{ secrets.GH_ACTIONS }}
           fetch-depth: 2
