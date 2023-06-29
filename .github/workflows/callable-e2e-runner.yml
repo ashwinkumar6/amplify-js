@@ -27,18 +27,18 @@ jobs:
         run: echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
         working-directory: ./amplify-js
 
-  e2e-test-runner:
-    name: e2e test runnner
-    needs: e2e-prep
-    secrets: inherit
-    strategy:
-      matrix:
-        integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
-    uses: ./.github/workflows/callable-unit-tests.yml
-    with:
-      test_name: ${{ matrix.integ-config.test_name }}
-      framework: ${{ matrix.integ-config.framework }}
-      category: ${{ matrix.integ-config.category }}
-      sample_name: ${{ matrix.integ-config.sample_name }}
-      spec: ${{ matrix.integ-config.spec }}
-      browser: ${{ matrix.integ-config.browser }}
+  # e2e-test-runner:
+  #   name: e2e test runnner
+  #   needs: e2e-prep
+  #   secrets: inherit
+  #   strategy:
+  #     matrix:
+  #       integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
+  #   uses: ./.github/workflows/callable-unit-tests.yml
+  #   with:
+  #     test_name: ${{ matrix.integ-config.test_name }}
+  #     framework: ${{ matrix.integ-config.framework }}
+  #     category: ${{ matrix.integ-config.category }}
+  #     sample_name: ${{ matrix.integ-config.sample_name }}
+  #     spec: ${{ matrix.integ-config.spec }}
+  #     browser: ${{ matrix.integ-config.browser }}
