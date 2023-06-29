@@ -23,6 +23,6 @@ jobs:
     # needs:
     #   - prebuild
     #   - prebuild-samples-staging
-    uses: ./.github/workflows/callable-e2e.yml
-    secrets:
-      GH_ACTIONS: ${{ secrets.GH_ACTIONS }}
+    uses: ./.github/workflows/callable-e2e-runner.yml
+    # secrets:
+    #   GH_ACTIONS: ${{ secrets.GH_ACTIONS }}
