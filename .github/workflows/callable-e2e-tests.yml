@@ -44,37 +44,36 @@ jobs:
     steps:
       - name: check incoming config
         run: |
-          echo "${{ inputs.framework }}"
-
-          echo ${{ inputs.framework }} \
+          echo \
+          ${{ inputs.framework }} \
           ${{ inputs.category }} \
           ${{ inputs.sample_name }} \
           ${{ inputs.spec }} \
           ${{ inputs.browser }} \
 
-  #     - name: Checkout staging repo
-  #       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
-  #       with:
-  #         repository: yingku/amplify-js-samples-staging
-  #         path: aws-amplify-staging
-  #         token: ${{ secrets.GH_ACTIONS }}
+      - name: Checkout staging repo
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+        with:
+          repository: yingku/amplify-js-samples-staging
+          path: aws-amplify-staging
+          token: ${{ secrets.GH_ACTIONS }}
 
-  #     - name: Set up Node
-  #       uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
-  #       with:
-  #         node-version: 16
-  #       env:
-  #         SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
+      # - name: Set up Node
+      #   uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
+      #   with:
+      #     node-version: 16
+      #   env:
+      #     SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
 
-  #     - name: run the integ test
-  #       run: |
-  #         yarn ci:test \
-  #         ${{ matrix.integ-config.framework }} \
-  #         ${{ matrix.integ-config.category }} \
-  #         ${{ matrix.integ-config.sample_name }} \
-  #         ${{ matrix.integ-config.spec }} \
-  #         ${{ matrix.integ-config.browser }} \
-  #       working-directory: ./aws-amplify-staging
+      # - name: run the integ test
+      #   run: |
+      #     yarn ci:test \
+      #     ${{ matrix.integ-config.framework }} \
+      #     ${{ matrix.integ-config.category }} \
+      #     ${{ matrix.integ-config.sample_name }} \
+      #     ${{ matrix.integ-config.spec }} \
+      #     ${{ matrix.integ-config.browser }} \
+      #   working-directory: ./aws-amplify-staging
 
 
 
