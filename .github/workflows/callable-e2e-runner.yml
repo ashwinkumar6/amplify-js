@@ -24,7 +24,9 @@ jobs:
         with:
           path: amplify-js
       - name: read integ config files
-        run: echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
+        run: | 
+          echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
+          echo ${{env.INTEG_CONFIG}}
         working-directory: ./amplify-js
 
   e2e-test-runner:
