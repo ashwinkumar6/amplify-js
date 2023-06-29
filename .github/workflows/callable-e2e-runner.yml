@@ -5,28 +5,19 @@ on:
         required: true
 
 jobs:
-  test-job:
+  e2e-prep:
+    name: Get required configs to run e2e tests
     runs-on: ubuntu-latest
+    outputs:
+      integ-config: ${{env.INTEG_CONFIG}}
     steps:
-      - name: test
-        run: |
-          pwd
-          pwd
-          ls -a
-
-  # e2e-prep:
-  #   name: Get required configs to run e2e tests
-  #   runs-on: ubuntu-latest
-  #   outputs:
-  #     integ-config: ${{env.INTEG_CONFIG}}
-  #   steps:
-  #     - name: checkout AmplifyJs
-  #       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
-  #       with:
-  #         path: amplify-js
-  #     - name: read integ config files
-  #       run: echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
-  #       working-directory: ./amplify-js
+      - name: checkout AmplifyJs
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+        with:
+          path: amplify-js
+      - name: read integ config files
+        run: echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
+        working-directory: ./amplify-js
 
   # e2e-test-runner:
   #   name: e2e test runnner
