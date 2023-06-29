@@ -45,11 +45,11 @@ jobs:
       - name: check incoming config
         run: |
           echo \
-          ${{ matrix.integ-config.framework }} \
-          ${{ matrix.integ-config.category }} \
-          ${{ matrix.integ-config.sample_name }} \
-          ${{ matrix.integ-config.spec }} \
-          ${{ matrix.integ-config.browser }} \
+          ${{ inputs.integ-config.framework }} \
+          ${{ inputs.integ-config.category }} \
+          ${{ inputs.integ-config.sample_name }} \
+          ${{ inputs.integ-config.spec }} \
+          ${{ inputs.integ-config.browser }} \
 
   #     - name: Checkout staging repo
   #       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
