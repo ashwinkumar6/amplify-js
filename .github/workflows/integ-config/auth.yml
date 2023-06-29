@@ -4,7 +4,7 @@
   category: auth
   sample_name: amplify-authenticator
   spec: ui-amplify-authenticator
-  browser: [chrome]
+  browser: [chrome, firefox]
 
 # - test_name: Angular Custom Authenticator
 #   framework: angular
