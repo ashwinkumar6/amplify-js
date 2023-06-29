@@ -2,10 +2,6 @@
 
 on:
   workflow_call:
-    secrets:
-      GH_PAT:
-        required: true
-
     inputs:
       # package:
       #   required: false

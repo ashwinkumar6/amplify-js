@@ -1,8 +1,5 @@
 on:
   workflow_call:
-    # secrets:
-    #   GH_PAT:
-    #     required: true
 
 jobs:
   e2e-prep:
