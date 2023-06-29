@@ -17,13 +17,6 @@ jobs:
   # prebuild-samples-staging:
   #   secrets: inherit
   #   uses: ./.github/workflows/callable-prebuild-samples-staging.yml
-  test-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: test
-        run: |
-          pwd
-          ls -a
 
   e2e:
     # needs:
