@@ -6,36 +6,36 @@ on:
     #   GH_ACTIONS:
     #     required: true
 
-    # secrets:
-    #   GH_ACTIONS:
+    # # secrets:
+    # #   GH_ACTIONS:
+    # #     required: true
+    # inputs:
+    #   # package:
+    #   #   required: false
+    #   #   type: string
+    #   test_name:
     #     required: true
-    inputs:
-      # package:
-      #   required: false
-      #   type: string
-      test_name:
-        required: true
-        type: string
-      framework:
-        required: true
-        type: string
-      category:
-        required: true
-        type: string
-      sample_name:
-        required: true
-        type: string
-      spec:
-        # optional - the script will use sample_name by default
-        type: string
-        default: ''
-      browser:
-        type: string
-        default: ''
-      # amplifyjs_dir:
-      #   # optional - dir to amplify js workspace
-      #   type: string
-      #   default: ''
+    #     type: string
+    #   framework:
+    #     required: true
+    #     type: string
+    #   category:
+    #     required: true
+    #     type: string
+    #   sample_name:
+    #     required: true
+    #     type: string
+    #   spec:
+    #     # optional - the script will use sample_name by default
+    #     type: string
+    #     default: ''
+    #   browser:
+    #     type: string
+    #     default: ''
+    #   # amplifyjs_dir:
+    #   #   # optional - dir to amplify js workspace
+    #   #   type: string
+    #   #   default: ''
 
 jobs:
   test-job:

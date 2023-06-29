@@ -31,14 +31,14 @@ jobs:
     name: e2e test runnner
     needs: e2e-prep
     # secrets: inherit
-    strategy:
-      matrix:
-        integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
+    # strategy:
+    #   matrix:
+    #     integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
     uses: ./.github/workflows/callable-e2e-tests.yml
-    with:
-      test_name: ${{ matrix.integ-config.test_name }}
-      framework: ${{ matrix.integ-config.framework }}
-      category: ${{ matrix.integ-config.category }}
-      sample_name: ${{ matrix.integ-config.sample_name }}
-      spec: ${{ matrix.integ-config.spec }}
-      browser: ${{ matrix.integ-config.browser }}
+    # with:
+    #   test_name: ${{ matrix.integ-config.test_name }}
+    #   framework: ${{ matrix.integ-config.framework }}
+    #   category: ${{ matrix.integ-config.category }}
+    #   sample_name: ${{ matrix.integ-config.sample_name }}
+    #   spec: ${{ matrix.integ-config.spec }}
+    #   browser: ${{ matrix.integ-config.browser }}
