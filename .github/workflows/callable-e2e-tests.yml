@@ -44,8 +44,9 @@ jobs:
     steps:
       - name: check incoming config
         run: |
-          echo \
-          ${{ inputs.integ-config.framework }} \
+          echo "${{ inputs.integ-config.framework }}"
+
+          echo ${{ inputs.integ-config.framework }} \
           ${{ inputs.integ-config.category }} \
           ${{ inputs.integ-config.sample_name }} \
           ${{ inputs.integ-config.spec }} \
