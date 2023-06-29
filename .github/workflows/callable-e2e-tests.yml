@@ -35,77 +35,87 @@ on:
 
 
 jobs:
-  unit_test:
-    name: Run E2E test
+  test-job:
     runs-on: ubuntu-latest
     steps:
-      - name: check incoming config
+      - name: test
         run: |
-          echo 
-          ${{ matrix.integ-config.framework }} \
-          ${{ matrix.integ-config.category }} \
-          ${{ matrix.integ-config.sample_name }} \
-          ${{ matrix.integ-config.spec }} \
-          ${{ matrix.integ-config.browser }} \
+          pwd
+          ls -a
 
-      - name: Checkout staging repo
-        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
-        with:
-          repository: yingku/amplify-js-samples-staging
-          path: aws-amplify-staging
-          token: ${{ secrets.GH_ACTIONS }}
+  # e2e-test:
+  #   name: Run E2E test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: check incoming config
+  #       run: |
+  #         echo 
+  #         ${{ matrix.integ-config.framework }} \
+  #         ${{ matrix.integ-config.category }} \
+  #         ${{ matrix.integ-config.sample_name }} \
+  #         ${{ matrix.integ-config.spec }} \
+  #         ${{ matrix.integ-config.browser }} \
 
-      - name: Set up Node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
-        with:
-          node-version: 16
-        env:
-          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
+  #     - name: Checkout staging repo
+  #       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+  #       with:
+  #         repository: yingku/amplify-js-samples-staging
+  #         path: aws-amplify-staging
+  #         token: ${{ secrets.GH_ACTIONS }}
 
-      - name: run the integ test
-        run: |
-          yarn ci:test \
-          ${{ matrix.integ-config.framework }} \
-          ${{ matrix.integ-config.category }} \
-          ${{ matrix.integ-config.sample_name }} \
-          ${{ matrix.integ-config.spec }} \
-          ${{ matrix.integ-config.browser }} \
-        working-directory: ./aws-amplify-staging
+  #     - name: Set up Node
+  #       uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
+  #       with:
+  #         node-version: 16
+  #       env:
+  #         SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
 
-      # - name: Install ${{ inputs.test_name }} >> sample
-      #   run: |
-      #     echo "Current NPM registry: " $(yarn config get registry)
-      #     ~/amplify-js/.circleci/retry-yarn-script.sh -s 'install' -n 3
+  #     - name: run the integ test
+  #       run: |
+  #         yarn ci:test \
+  #         ${{ matrix.integ-config.framework }} \
+  #         ${{ matrix.integ-config.category }} \
+  #         ${{ matrix.integ-config.sample_name }} \
+  #         ${{ matrix.integ-config.spec }} \
+  #         ${{ matrix.integ-config.browser }} \
+  #       working-directory: ./aws-amplify-staging
 
-      # - name: Run cypress tests for ${{ inputs.test_name }} sample on dev
-      #   run: |
-      #     cd ~/amplify-js-samples-staging
-      #     ~/amplify-js/.circleci/retry-yarn-script.sh -s \
-      #     'ci:test ${{ inputs.framework }} \
-      #     ${{ inputs.category }} \
-      #     ${{ inputs.sample_name }} \
-      #     ${{ inputs.spec }} \
-      #     ${{ inputs.browser }} \
-      #     dev \
-      #     ${{ inputs.amplifyjs_dir }}' -n 3
 
-      # - name: Run cypress tests for ${{ inputs.test_name }} sample on prod
-      #   run: |
-      #     cd ~/amplify-js-samples-staging
 
-      #     ~/amplify-js/.circleci/retry-yarn-script.sh -s \
-      #     'ci:test ${{ inputs.framework }} \
-      #     ${{ inputs.category }} \
-      #     ${{ inputs.sample_name }} \
-      #     ${{ inputs.spec }} \
-      #     ${{ inputs.browser }} \
-      #     prod \
-      #     ${{ inputs.amplifyjs_dir }}' -n 3
+  #     # - name: Install ${{ inputs.test_name }} >> sample
+  #     #   run: |
+  #     #     echo "Current NPM registry: " $(yarn config get registry)
+  #     #     ~/amplify-js/.circleci/retry-yarn-script.sh -s 'install' -n 3
 
-      # - uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2 https://github.com/actions/upload-artifact/commit/0b7f8abb1508181956e8e162db84b466c27e18ce
-      #   with:
-      #     name: my-artifact
-      #     path: |
-      #       ~/amplify-js-samples-staging/cypress/videos
-      #       ~/amplify-js-samples-staging/cypress/screenshots
+  #     # - name: Run cypress tests for ${{ inputs.test_name }} sample on dev
+  #     #   run: |
+  #     #     cd ~/amplify-js-samples-staging
+  #     #     ~/amplify-js/.circleci/retry-yarn-script.sh -s \
+  #     #     'ci:test ${{ inputs.framework }} \
+  #     #     ${{ inputs.category }} \
+  #     #     ${{ inputs.sample_name }} \
+  #     #     ${{ inputs.spec }} \
+  #     #     ${{ inputs.browser }} \
+  #     #     dev \
+  #     #     ${{ inputs.amplifyjs_dir }}' -n 3
+
+  #     # - name: Run cypress tests for ${{ inputs.test_name }} sample on prod
+  #     #   run: |
+  #     #     cd ~/amplify-js-samples-staging
+
+  #     #     ~/amplify-js/.circleci/retry-yarn-script.sh -s \
+  #     #     'ci:test ${{ inputs.framework }} \
+  #     #     ${{ inputs.category }} \
+  #     #     ${{ inputs.sample_name }} \
+  #     #     ${{ inputs.spec }} \
+  #     #     ${{ inputs.browser }} \
+  #     #     prod \
+  #     #     ${{ inputs.amplifyjs_dir }}' -n 3
+
+  #     # - uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2 https://github.com/actions/upload-artifact/commit/0b7f8abb1508181956e8e162db84b466c27e18ce
+  #     #   with:
+  #     #     name: my-artifact
+  #     #     path: |
+  #     #       ~/amplify-js-samples-staging/cypress/videos
+  #     #       ~/amplify-js-samples-staging/cypress/screenshots
 
