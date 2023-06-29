@@ -22,5 +22,5 @@ jobs:
     # needs:
     #   - prebuild
     #   - prebuild-samples-staging
-    secrets: inherit
+    # secrets: inherit
     uses: ./.github/workflows/callable-e2e.yml
