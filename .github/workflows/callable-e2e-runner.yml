@@ -1,3 +1,5 @@
+name: 'E2E Test Runner'
+
 on:
   workflow_call:
     secrets:
@@ -22,7 +24,11 @@ jobs:
   e2e-test-runner:
     name: e2e test runnner
     needs: e2e-prep
-    secrets: inherit
+
+    secrets:
+      GH_ACTIONS: ${{ secrets.GH_ACTIONS }}
+
+
     strategy:
       matrix:
         integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
