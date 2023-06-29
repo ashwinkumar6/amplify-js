@@ -1,8 +1,8 @@
 on:
   workflow_call:
-    secrets:
-      GH_ACTIONS:
-        required: true
+    # secrets:
+    #   GH_ACTIONS:
+    #     required: true
 
 jobs:
   test-job:
