@@ -6,6 +6,15 @@ on:
       GH_ACTIONS:
         required: true
 
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: |
+          pwd
+          ls -a
+
     # secrets:
     #   GH_ACTIONS:
     #     required: true
@@ -38,14 +47,6 @@ on:
     #   #   default: ''
 
 
-jobs:
-  test-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: test
-        run: |
-          pwd
-          ls -a
 
   # e2e-test:
   #   name: Run E2E test
