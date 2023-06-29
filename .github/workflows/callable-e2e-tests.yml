@@ -38,27 +38,18 @@ on:
       #   default: ''
 
 jobs:
-  test-job:
+  e2e-test:
+    name: Run E2E test
     runs-on: ubuntu-latest
     steps:
-      - name: test
+      - name: check incoming config
         run: |
-          pwd
-          ls -a
-
-
-  # e2e-test:
-  #   name: Run E2E test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: check incoming config
-  #       run: |
-  #         echo 
-  #         ${{ matrix.integ-config.framework }} \
-  #         ${{ matrix.integ-config.category }} \
-  #         ${{ matrix.integ-config.sample_name }} \
-  #         ${{ matrix.integ-config.spec }} \
-  #         ${{ matrix.integ-config.browser }} \
+          echo 
+          ${{ matrix.integ-config.framework }} \
+          ${{ matrix.integ-config.category }} \
+          ${{ matrix.integ-config.sample_name }} \
+          ${{ matrix.integ-config.spec }} \
+          ${{ matrix.integ-config.browser }} \
 
   #     - name: Checkout staging repo
   #       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
