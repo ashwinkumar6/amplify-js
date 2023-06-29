@@ -36,6 +36,7 @@ jobs:
     needs: e2e-prep
     steps:
       - run: echo ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
+      - run: echo ${{ needs.e2e-prep.outputs.integ-config }}
 
   # e2e-test-runner:
   #   name: e2e test runnner
