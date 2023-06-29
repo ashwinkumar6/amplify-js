@@ -44,7 +44,7 @@ jobs:
     steps:
       - name: check incoming config
         run: |
-          echo 
+          echo \
           ${{ matrix.integ-config.framework }} \
           ${{ matrix.integ-config.category }} \
           ${{ matrix.integ-config.sample_name }} \
