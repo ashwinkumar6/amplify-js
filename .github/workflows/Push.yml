@@ -1,5 +1,7 @@
-on: [push] 
-
+on:
+  push:
+    branches:
+      - gh-actions-ashwin
 jobs:
   # prebuild:
   #   runs-on: ubuntu-latest
