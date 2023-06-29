@@ -1,9 +1,14 @@
 # angular
-- framework: angular
+- test_name: Angular Authenticator
+  framework: angular
   category: auth
   sample_name: amplify-authenticator
   spec: ui-amplify-authenticator
-# - framework: angular
+  browser: chrome
+
+# - test_name: Angular Custom Authenticator
+#   framework: angular
 #   category: auth
 #   sample_name: amplify-authenticator
 #   spec: custom-authenticator
+#   browser: chrome
