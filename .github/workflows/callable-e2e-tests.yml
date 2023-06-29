@@ -51,22 +51,22 @@ jobs:
           path: aws-amplify-staging
           token: ${{ secrets.GH_PAT }}
 
-      # - name: Set up Node
-      #   uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
-      #   with:
-      #     node-version: 16
-      #   env:
-      #     SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
+      - name: Set up Node
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
+        with:
+          node-version: 16
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
 
-      # - name: run the integ test
-      #   run: |
-      #     yarn ci:test \
-      #     ${{ matrix.integ-config.framework }} \
-      #     ${{ matrix.integ-config.category }} \
-      #     ${{ matrix.integ-config.sample_name }} \
-      #     ${{ matrix.integ-config.spec }} \
-      #     ${{ matrix.integ-config.browser }} \
-      #   working-directory: ./aws-amplify-staging
+      - name: run the integ test
+        run: |
+          yarn ci:test \
+          ${{ matrix.integ-config.framework }} \
+          ${{ matrix.integ-config.category }} \
+          ${{ matrix.integ-config.sample_name }} \
+          ${{ matrix.integ-config.spec }} \
+          ${{ matrix.integ-config.browser }} \
+        working-directory: ./aws-amplify-staging
 
 
 
