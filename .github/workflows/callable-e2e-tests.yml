@@ -2,9 +2,9 @@ name: 'E2E Tests'
 
 on:
   workflow_call:
-  #   secrets:
-  #     GH_ACTIONS:
-  #       required: true
+    secrets:
+      GH_ACTIONS:
+        required: true
 
     # secrets:
     #   GH_ACTIONS:
