@@ -2,13 +2,10 @@
 
 on:
   workflow_call:
-    # secrets:
-    #   GH_ACTIONS:
-    #     required: true
+    secrets:
+      GH_ACTIONS:
+        required: true
 
-    # secrets:
-    #   GH_ACTIONS:
-    #     required: true
     inputs:
       # package:
       #   required: false
