@@ -45,4 +45,7 @@ jobs:
       category: ${{ matrix.integ-config.category }}
       sample_name: ${{ matrix.integ-config.sample_name }}
       spec: ${{ matrix.integ-config.spec }}
-      browser: ${{ toJSON(fromJson(needs.e2e-prep.outputs.integ-utils)[matrix.integ-config.browser]) || matrix.integ-config.browser }}
+      # browser: ${{ toJSON(fromJson(needs.e2e-prep.outputs.integ-utils)[matrix.integ-config.browser]x) || matrix.integ-config.browser }}
+
+      browser: ${{ needs.e2e-prep.outputs.integ-utils) }}
+      
