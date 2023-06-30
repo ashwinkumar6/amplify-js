@@ -1,7 +1,6 @@
 name: 'E2E Test Runner'
 
 env:
-  test_browser: "chrome"
   minimal_browser_list: ("chrome" "firefox")
   extended_browser_list: ("chrome" "firefox" "edge")
 
@@ -10,6 +9,8 @@ env:
 #       if: ${{ github.event_name == 'push' && contains(env.MAIN_BRANCHES, steps.calculate_changed_services.outputs.diff_dest) }}
 #       run: echo "my main branches ${MAIN_BRANCHES}"
 # ...
+
+# some-property: ...${{ inputs.readonly == 'true' && 'true-val' || 'false-val' 
 
 on:
   workflow_call:
@@ -43,4 +44,4 @@ jobs:
       category: ${{ matrix.integ-config.category }}
       sample_name: ${{ matrix.integ-config.sample_name }}
       spec: ${{ matrix.integ-config.spec }}
-      browser: ${{ ${{matrix.integ-config.browser}} }}
+      browser: ${{ matrix.integ-config.browser && matrix.integ-config.browser || 'chrome' }}
