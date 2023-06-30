@@ -6,9 +6,9 @@
   spec: ui-amplify-authenticator
   # browser: minimal_browser_list
 
-# - test_name: Angular Custom Authenticator
-#   framework: angular
-#   category: auth
-#   sample_name: amplify-authenticator
-#   spec: custom-authenticator
-#   # browser: chrome
+- test_name: Angular Custom Authenticator
+  framework: angular
+  category: auth
+  sample_name: amplify-authenticator
+  spec: custom-authenticator
+  browser: chrome
