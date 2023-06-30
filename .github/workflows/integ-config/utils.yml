@@ -1,4 +1,4 @@
-- minimal_browser_list: firefox
-- extended_browser_list:
+minimal_browser_list: firefox
+extended_browser_list:
   - chrome
   - firefox
