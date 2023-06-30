@@ -21,7 +21,7 @@ runs:
       if: steps.cache-samples-staging-build.outputs.cache-hit != 'true'
       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
       with:
-        repository: stocaaro/amplify-js-samples-staging
+        repository: ashwinkumar6/amplify-js-samples-staging
         path: amplify-js-samples-staging
         token: ${{ inputs.GH_PAT }}
         fetch-depth: 2
