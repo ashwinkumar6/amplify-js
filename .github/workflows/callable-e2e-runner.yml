@@ -36,7 +36,7 @@ jobs:
     needs: e2e-prep
     steps:
       - run: |
-          echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils)[browser] }}"
+          echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils)["browser"] }}"
           echo "###################"
           echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils).browser }}"
 
