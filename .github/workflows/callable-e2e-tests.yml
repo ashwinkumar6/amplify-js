@@ -50,7 +50,7 @@ jobs:
           ${{ inputs.category }} \
           ${{ inputs.sample_name }} \
           ${{ inputs.spec }} \
-          ${{ inputs.browser }} \
+          ${{ matrix.browser }} \
 
       - name: Checkout staging repo
         uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
