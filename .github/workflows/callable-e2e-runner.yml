@@ -2,9 +2,9 @@ name: 'E2E Test Runner'
 
 on:
   workflow_call:
-    env:
-      minimal_browser_list: [chrome, firefox]
-      extended_browser_list: [chrome, firefox, edge]
+    # env:
+    #   minimal_browser_list: [chrome, firefox]
+    #   extended_browser_list: [chrome, firefox, edge]
 
 jobs:
   e2e-prep:
