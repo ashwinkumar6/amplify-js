@@ -35,8 +35,9 @@ jobs:
     needs: e2e-prep
     steps:
       - run: |
-          echo ${{ needs.e2e-prep.outputs.integ-config }}
-          echo ${{ needs.e2e-prep.outputs.integ-utils.browser }}
+          echo "${{ needs.e2e-prep.outputs.integ-config }}"
+          echo "################################################"
+          echo "${{ needs.e2e-prep.outputs.integ-utils.browser }}"
 
   # e2e-test-runner:
   #   name: e2e test runnner
