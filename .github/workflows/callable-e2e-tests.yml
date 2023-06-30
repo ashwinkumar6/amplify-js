@@ -34,10 +34,10 @@ jobs:
   e2e-test:
     name: Run E2E test
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     browser:
-    #       - ${{ fromJson(inputs.browser) }}
+    strategy:
+      matrix:
+        browser:
+          - ${{ fromJson(inputs.browser) }}
 
     steps:
       - name: check incoming config
@@ -47,7 +47,7 @@ jobs:
           ${{ inputs.category }} \
           ${{ inputs.sample_name }} \
           ${{ inputs.spec }} \
-          ${{ inputs.browser }}
+          ${{ matrix.browser }}
 
       # - name: Checkout staging repo
       #   uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
