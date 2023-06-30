@@ -49,33 +49,33 @@ jobs:
           ${{ inputs.spec }} \
           ${{ matrix.browser }}
 
-      # - name: Checkout staging repo
-      #   uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
-      #   with:
-      #     repository: ashwinkumar6/amplify-js-samples-staging
-      #     path: aws-amplify-staging
-      #     token: ${{ secrets.GH_PAT }}
+      - name: Checkout staging repo
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+        with:
+          repository: ashwinkumar6/amplify-js-samples-staging
+          path: aws-amplify-staging
+          token: ${{ secrets.GH_PAT }}
 
-      # - name: Set up Node
-      #   uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
-      #   with:
-      #     node-version: 16
-      #   env:
-      #     SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
+      - name: Set up Node
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c        
+        with:
+          node-version: 16
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
 
-      # - name: run yarn intall
-      #   run: yarn
-      #   working-directory: ./aws-amplify-staging
+      - name: run yarn intall
+        run: yarn
+        working-directory: ./aws-amplify-staging
 
-      # - name: run the integ test
-      #   run: |
-      #     yarn ci:test \
-      #     ${{ inputs.framework }} \
-      #     ${{ inputs.category }} \
-      #     ${{ inputs.sample_name }} \
-      #     ${{ inputs.spec }} \
-      #     ${{ matrix.browser }} \
-      #   working-directory: ./aws-amplify-staging
+      - name: run the integ test
+        run: |
+          yarn ci:test \
+          ${{ inputs.framework }} \
+          ${{ inputs.category }} \
+          ${{ inputs.sample_name }} \
+          ${{ inputs.spec }} \
+          ${{ matrix.browser }} \
+        working-directory: ./aws-amplify-staging
 
 
 

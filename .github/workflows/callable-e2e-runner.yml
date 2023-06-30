@@ -29,25 +29,6 @@ jobs:
           echo "INTEG_UTILS=$(cat .github/workflows/integ-config/utils.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
         working-directory: ./amplify-js
 
-# echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils).browser }}"
-  # e2e-tester:
-  #   name: e2e test runnner
-  #   needs: e2e-prep
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - run: |
-  #         echo "${{ needs.e2e-prep.outputs.integ-utils }}"
-  #         echo "######"
-  #         echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils) }}"
-  #         echo "######"
-  #         echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils)['minimal_browser_list'] }}"
-  #         echo "######"
-  #         echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils)['minimal_browser_list'] }}"
-  #         echo "######"
-  #         echo "${{ toJSON(fromJson(needs.e2e-prep.outputs.integ-utils)['minimal_browser_list']) }}"
-  #         echo "######"
-  #         echo "${{ toJSON(fromJson(needs.e2e-prep.outputs.integ-utils)['minimal_browser_list']) }}"
-
   e2e-test-runner:
     name: e2e test runnner
     needs: e2e-prep
