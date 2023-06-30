@@ -25,7 +25,7 @@ jobs:
           path: amplify-js
       - name: read integ config files
         run: |
-          echo  ${{ cat .github/workflows/integ-config/utils.yml }}
+          echo  "${{ cat .github/workflows/integ-config/utils.yml }}"
           echo "INTEG_CONFIG=$(cat .github/workflows/integ-config/integ-*.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
           echo " INTEG_UTILS=$(cat .github/workflows/integ-config/utils.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
         working-directory: ./amplify-js
