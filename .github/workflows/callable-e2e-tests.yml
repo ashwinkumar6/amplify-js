@@ -36,7 +36,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: ${{ inputs.browser }}
+        browser:
+          - ${{ inputs.browser }}
 
     steps:
       - name: check incoming config
