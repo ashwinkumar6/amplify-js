@@ -43,4 +43,4 @@ jobs:
       category: ${{ matrix.integ-config.category }}
       sample_name: ${{ matrix.integ-config.sample_name }}
       spec: ${{ matrix.integ-config.spec }}
-      browser: ${{ matrix.integ-config.browser }}
+      browser: ${{ ${{matrix.integ-config.browser}} }}
