@@ -30,29 +30,20 @@ jobs:
           echo "INTEG_UTILS=$(cat .github/workflows/integ-config/utils.yml | yq -o=json | jq -c .)" >> $GITHUB_ENV
         working-directory: ./amplify-js
 
+# echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils).browser }}"
+
   e2e-test-runner:
     name: e2e test runnner
-    runs-on: ubuntu-latest
     needs: e2e-prep
-    steps:
-      - run: |
-          echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils)['browser'] }}"
-          echo "###################"
-          echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils).browser }}"
-
-  # e2e-test-runner:
-  #   name: e2e test runnner
-  #   needs: e2e-prep
-  #   secrets: inherit
-  #   strategy:
-  #     matrix:
-  #       integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
-  #   uses: ./.github/workflows/callable-e2e-tests.yml
-  #   with:
-  #     test_name: ${{ matrix.integ-config.test_name }}
-  #     framework: ${{ matrix.integ-config.framework }}
-  #     category: ${{ matrix.integ-config.category }}
-  #     sample_name: ${{ matrix.integ-config.sample_name }}
-  #     spec: ${{ matrix.integ-config.spec }}
-  #     browser: ${{ 
-  #       matrix.integ-config.browser && matrix.integ-config.browser || 'chrome' }}
+    secrets: inherit  
+    strategy:
+      matrix:
+        integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
+    uses: ./.github/workflows/callable-e2e-tests.yml
+    with:
+      test_name: ${{ matrix.integ-config.test_name }}
+      framework: ${{ matrix.integ-config.framework }}
+      category: ${{ matrix.integ-config.category }}
+      sample_name: ${{ matrix.integ-config.sample_name }}
+      spec: ${{ matrix.integ-config.spec }}
+      browser: ${{ fromJson(needs.e2e-prep.outputs.integ-utils).browser[matrix.integ-config.browser] || matrix.integ-config.browser }}
