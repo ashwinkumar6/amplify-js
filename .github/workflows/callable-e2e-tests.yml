@@ -58,6 +58,10 @@ jobs:
         env:
           SEGMENT_DOWNLOAD_TIMEOUT_MINS: 50
 
+      - name: run yarn intall
+        run: yarn
+        working-directory: ./aws-amplify-staging
+
       - name: run the integ test
         run: |
           yarn ci:test \
