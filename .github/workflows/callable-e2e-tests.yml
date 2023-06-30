@@ -1,5 +1,8 @@
 name: 'E2E Tests'
 
+env:
+  test_browser: "chrome"
+
 on:
   workflow_call:
     inputs:
