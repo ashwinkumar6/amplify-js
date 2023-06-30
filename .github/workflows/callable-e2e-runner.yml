@@ -30,21 +30,34 @@ jobs:
         working-directory: ./amplify-js
 
 # echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils).browser }}"
-
-  e2e-test-runner:
+  e2e-tester:
     name: e2e test runnner
     needs: e2e-prep
-    secrets: inherit  
-    strategy:
-      matrix:
-        integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
-    uses: ./.github/workflows/callable-e2e-tests.yml
-    with:
-      test_name: ${{ matrix.integ-config.test_name }}
-      framework: ${{ matrix.integ-config.framework }}
-      category: ${{ matrix.integ-config.category }}
-      sample_name: ${{ matrix.integ-config.sample_name }}
-      spec: ${{ matrix.integ-config.spec }}
-      browser: ${{ fromJson(needs.e2e-prep.outputs.integ-utils).minimal_browser_list] }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "${{ needs.e2e-prep.outputs.integ-utils }}"
+          echo "######"
+          echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils) }}"
+          echo "######"
+          echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils)['minimal_browser_list'] }}"
+          echo "######"
+          echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils).minimal_browser_list }}"
+
+  # e2e-test-runner:
+  #   name: e2e test runnner
+  #   needs: e2e-prep
+  #   secrets: inherit  
+  #   strategy:
+  #     matrix:
+  #       integ-config: ${{ fromJson(needs.e2e-prep.outputs.integ-config) }}
+  #   uses: ./.github/workflows/callable-e2e-tests.yml
+  #   with:
+  #     test_name: ${{ matrix.integ-config.test_name }}
+  #     framework: ${{ matrix.integ-config.framework }}
+  #     category: ${{ matrix.integ-config.category }}
+  #     sample_name: ${{ matrix.integ-config.sample_name }}
+  #     spec: ${{ matrix.integ-config.spec }}
+  #     browser: ${{ fromJson(needs.e2e-prep.outputs.integ-utils).minimal_browser_list] }}
       
-  # browser: ${{ toJSON(fromJson(needs.e2e-prep.outputs.integ-utils)[matrix.integ-config.browser]x) || matrix.integ-config.browser }}
+  # # browser: ${{ toJSON(fromJson(needs.e2e-prep.outputs.integ-utils)[matrix.integ-config.browser]x) || matrix.integ-config.browser }}
