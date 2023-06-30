@@ -42,7 +42,9 @@ jobs:
           echo "######"
           echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils)['minimal_browser_list'] }}"
           echo "######"
-          echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils).minimal_browser_list }}"
+          echo "${{ fromJson(needs.e2e-prep.outputs.integ-utils)['minimal_browser_list'] }}"
+          echo "######"
+          echo "${{ toJSON(fromJson(needs.e2e-prep.outputs.integ-utils)['minimal_browser_list']) }}"
 
   # e2e-test-runner:
   #   name: e2e test runnner
