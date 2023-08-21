@@ -17,7 +17,7 @@ export {
 	// AmazonPersonalizeProvider,
 } from '@aws-amplify/analytics';
 // export { Auth } from '@aws-amplify/auth';
-export { Storage, StorageClass } from '@aws-amplify/storage';
+export { Storage, StorageClass, list } from '@aws-amplify/storage';
 export {
 	ConsoleLogger as Logger,
 	Hub,
