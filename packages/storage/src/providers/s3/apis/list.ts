@@ -32,32 +32,32 @@ type S3ListApi = {
 	 * Lists all bucket objects.
 	 * @param {StorageListRequest<StorageListAllOptions>} req - The request object
 	 * @return {Promise<S3ListAllResult>} - Promise resolves to list of keys and metadata for all objects in path
-	 * @throws service: {@link S3Exception} - S3 service errors thrown while getting properties
+	 * @throws service: {@link S3Exception} - S3 service errors thrown while listing objects
 	 * @throws validation: {@link StorageValidationErrorCode } - Validation errors thrown
 	 */
-	(req: StorageListRequest<StorageListAllOptions>): Promise<S3ListAllResult>;
+	(req?: StorageListRequest<StorageListAllOptions>): Promise<S3ListAllResult>;
 	/**
-	 * List bucket objects with pagination
+	 * Lists bucket objects with pagination.
 	 * @param {StorageListRequest<StorageListPaginateOptions>} req - The request object
 	 * @return {Promise<S3ListPaginateResult>} - Promise resolves to list of keys and metadata for all objects in path
 	 * additionally the result will include a nextToken if there are more items to retrieve
-	 * @throws service: {@link S3Exception} - S3 service errors thrown while getting properties
+	 * @throws service: {@link S3Exception} - S3 service errors thrown while listing objects
 	 * @throws validation: {@link StorageValidationErrorCode } - Validation errors thrown
 	 */
 	(
-		req: StorageListRequest<StorageListPaginateOptions>
+		req?: StorageListRequest<StorageListPaginateOptions>
 	): Promise<S3ListPaginateResult>;
 };
 
 // TODO(ashwinkumar6) add unit test for list API
 export const list: S3ListApi = async (
-	req:
+	req?:
 		| StorageListRequest<StorageListAllOptions>
 		| StorageListRequest<StorageListPaginateOptions>
 ): Promise<S3ListAllResult | S3ListPaginateResult> => {
 	const { identityId, credentials } = await resolveCredentials();
 	const { defaultAccessLevel, bucket, region } = resolveStorageConfig();
-	const { path = '', options = {} } = req;
+	const { path = '', options = {} } = req || {};
 	const { accessLevel = defaultAccessLevel, listAll } = options;
 
 	// TODO(ashwinkumar6) V6-logger: check if this can be refactored
@@ -80,7 +80,7 @@ export const list: S3ListApi = async (
 		MaxKeys: options?.listAll ? undefined : options?.pageSize,
 		ContinuationToken: options?.listAll ? undefined : options?.nextToken,
 	};
-	  return listAll
+	return listAll
 		? await _listAll(listConfig, listParams)
 		: await _list(listConfig, listParams);
 };
