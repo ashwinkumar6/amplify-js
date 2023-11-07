@@ -17,7 +17,7 @@ export type ConfirmResetPasswordOptions = AuthServiceOptions & {
 };
 
 /**
- * Options specific to Cognito Resend Sign Up code.
+ * Options specific to Cognito Resend Sign Up code test.
  */
 export type ResendSignUpCodeOptions = AuthServiceOptions & {
 	clientMetadata?: ClientMetadata;
