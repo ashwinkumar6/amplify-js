@@ -42,7 +42,7 @@ describe('getUpdatedSystemClockOffset', () => {
 	});
 
 	// Addresses: https://github.com/aws-amplify/amplify-js/issues/12450#issuecomment-1787945008
-	it('should return the updated offset if system clock is back and forth', () => {
+	it('it should return the updated offset if system clock is back and forth', () => {
 		// initialize client clock skew to be 15 mins behind
 		mockIsClockSkewed.mockReturnValue(true);
 		const clockTime = new Date(signingDate);
