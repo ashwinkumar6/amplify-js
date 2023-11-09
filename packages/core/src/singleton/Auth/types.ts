@@ -97,11 +97,16 @@ export type AuthConfigUserAttributes = Partial<
 	Record<AuthStandardAttributeKey, { required: boolean }>
 >;
 
-export type AuthConfig = StrictUnion<
+type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
+	U[keyof U];
+
+export type cognitoProviderConfig = StrictUnion<
 	| AuthIdentityPoolConfig
 	| AuthUserPoolConfig
 	| AuthUserPoolAndIdentityPoolConfig
 >;
+
+export type AuthConfig = AtLeastOne<cognitoProviderConfig>;
 
 type UnionKeys<T> = T extends T ? keyof T : never;
 type StrictUnionHelper<T, TAll> = T extends any
