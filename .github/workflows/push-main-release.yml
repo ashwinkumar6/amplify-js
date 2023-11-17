@@ -11,14 +11,21 @@ on:
       - main
 
 jobs:
-  e2e:
+  #   e2e:
+  #     secrets: inherit
+  #     uses: ./.github/workflows/callable-release-verification.yml
+  #   unstable-release:
+  #     needs:
+  #       - e2e
+  #     secrets: inherit
+  #     uses: ./.github/workflows/callable-npm-publish-preid.yml
+  #     with:
+  #       preid: unstable
+  #       allow-protected-preid: true
+  release:
+    # needs:
+    #   - e2e
+    permissions:
+      contents: write
     secrets: inherit
-    uses: ./.github/workflows/callable-release-verification.yml
-  unstable-release:
-    needs:
-      - e2e
-    secrets: inherit
-    uses: ./.github/workflows/callable-npm-publish-preid.yml
-    with:
-      preid: unstable
-      allow-protected-preid: true
+    uses: ./.github/workflows/callable-npm-publish-release.yml
