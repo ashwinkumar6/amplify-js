@@ -32,6 +32,7 @@
 		"publish:release": "lerna publish --conventional-commits --message 'chore(release): Publish [ci skip]' --yes",
 		"publish:v5-stable": "lerna publish --conventional-commits --yes --dist-tag=stable-5 --message 'chore(release): Publish [ci skip]' --no-verify-access",
 		"publish:verdaccio": "lerna publish --canary --force-publish --no-push --dist-tag=unstable --preid=unstable --yes",
+		"list":"lerna list --json | jq -r '.[] | select(.name==aws-amplify) | .version'",
 		"ts-coverage": "lerna run ts-coverage",
 		"prepare": "./scripts/set-preid-versions.sh"
 	},
