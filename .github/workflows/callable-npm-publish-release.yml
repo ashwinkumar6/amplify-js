@@ -14,7 +14,6 @@ jobs:
 
       - name: testing aws-amplify version
         working-directory: ./amplify-js
-        id: version
         run: |
           npm install -g lerna
           lerna list --json | jq -r '.[] | select(.name=="aws-amplify") | .version'
@@ -25,31 +24,38 @@ jobs:
         run: |
           echo version is $aws_amplify_prev_version
 
-    #   - name: Setup node and build the repository
-    #     uses: ./amplify-js/.github/actions/node-and-build
+      #   - name: Setup node and build the repository
+      #     uses: ./amplify-js/.github/actions/node-and-build
 
-    #   ###
-    #   # TODO Remove this to enable real NPM interactions.
-    #   # <remove>
-    #   - name: Load Verdaccio with AmplifyJs
-    #     uses: ./amplify-js/.github/actions/load-verdaccio-with-amplify-js
-    #   ### </remove>
+      #   ###
+      #   # TODO Remove this to enable real NPM interactions.
+      #   # <remove>
+      #   - name: Load Verdaccio with AmplifyJs
+      #     uses: ./amplify-js/.github/actions/load-verdaccio-with-amplify-js
+      #   ### </remove>
 
-    #   - name: Run npm publish
-    #     uses: ./amplify-js/.github/actions/npm-publish
-    #     with:
-    #       target: release
-    #       npm_token: ${{ secrets.NPM_TOKEN }}
-    #       gh_token: ${{ secrets.GITHUB_TOKEN }}
-    #       github_user: ${{ vars.GH_USER}}
-    #       github_email: ${{ vars.GH_EMAIL}}
+      #   - name: Run npm publish
+      #     uses: ./amplify-js/.github/actions/npm-publish
+      #     with:
+      #       target: release
+      #       npm_token: ${{ secrets.NPM_TOKEN }}
+      #       gh_token: ${{ secrets.GITHUB_TOKEN }}
+      #       github_user: ${{ vars.GH_USER}}
+      #       github_email: ${{ vars.GH_EMAIL}}
 
-    #   - name: Run gh release
-    #     uses: ./.github/workflows/callable-gh-publish-release.yml
-    #     with:
-    #       newTag: ubuntu-latest
-    #       previousTag: ubuntu-latest
-    #       gh_token: ${{ secrets.GITHUB_TOKEN }}
+      #   - name: testing aws-amplify version
+      #     working-directory: ./amplify-js
+      #     id: version
+      #     run: |
+      #       lerna list --json | jq -r '.[] | select(.name=="aws-amplify") | .version'
+      #       echo "aws_amplify_next_version=$(lerna list --json | jq -r '.[] | select(.name == "aws-amplify") | .version')" >> $GITHUB_ENV
+
+      - name: Run gh release
+        uses: ./.github/workflows/callable-gh-publish-release.yml
+        with:
+          newTag: ${{ env.aws_amplify_prev_version }}
+          previousTag: ${{ env.aws_amplify_prev_version }}
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
 
     # ################################################################################################################
 
