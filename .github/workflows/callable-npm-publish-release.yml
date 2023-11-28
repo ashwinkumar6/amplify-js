@@ -18,14 +18,12 @@ jobs:
         run: |
           npm install -g lerna
           lerna list --json | jq -r '.[] | select(.name=="aws-amplify") | .version'
-          echo "awsamplify=$(lerna list --json | jq -r '.[] | select(.name == "aws-amplify") | .version')" >> $GITHUB_ENV
+          echo "aws-amplify-prev-version=$(lerna list --json | jq -r '.[] | select(.name == "aws-amplify") | .version')" >> $GITHUB_ENV
 
       - name: testing aws-amplify version
         working-directory: ./amplify-js
-        env:
-          PRE_VERSION: ${{ steps.version.outputs.awsamplify }}
         run: |
-          echo version is $awsamplify
+          echo version is $aws-amplify-prev-version
 
     #   - name: Setup node and build the repository
     #     uses: ./amplify-js/.github/actions/node-and-build
