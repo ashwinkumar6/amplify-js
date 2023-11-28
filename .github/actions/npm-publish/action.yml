@@ -17,6 +17,9 @@ inputs:
   npm_token:
     description: The npm token that gives the job npm permissions
     required: true
+  gh_token:
+    description: The github token that gives the job permissions to publish release notes on github
+    required: true
 
 runs:
   using: 'composite'
@@ -31,11 +34,11 @@ runs:
         git config --global user.name $GITHUB_USER
 
     - name: Run npm publish
-      if: github.repository_owner == 'aws-amplify'
       shell: bash
       working-directory: ./amplify-js
       env:
         NPM_TOKEN: ${{ inputs.npm_token }}
+        GH_TOKEN: ${{ inputs.gh_token }}
         GH_SHA: ${{ github.sha }}
         TARGET: ${{ inputs.target }}
         PREID_PREFIX: ${{ inputs.preid || '' }}
