@@ -1,0 +1,19 @@
+name: Push - release from main to unstable
+
+on:
+  push:
+    branches:
+      - main
+      - test-actions-todel
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        run: echo "inside"
+  release:
+    permissions:
+      contents: write
+    secrets: inherit
+    uses: ./.github/workflows/callable-npm-publish-release.yml
