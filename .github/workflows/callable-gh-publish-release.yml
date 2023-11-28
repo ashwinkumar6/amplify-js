@@ -1,0 +1,42 @@
+name: Release Workflow
+
+on:
+  workflow_call:
+    inputs:
+      newTag:
+        description: 'The new tag for the release'
+        required: true
+        type: string
+      previousTag:
+        description: 'The previous tag to compare for generating changelog'
+        required: true
+        type: string
+      gh_token:
+        description: The github token that gives the job permissions to publish release notes on github
+        required: true
+        type: string
+
+jobs:
+  create-changelog-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f # v3.4.0 https://github.com/actions/checkout/commit/24cb9080177205b6e8c946b17badbe402adc938f
+        with:
+          path: amplify-js
+
+      - name: Generate changelog
+        uses: mikepenz/release-changelog-builder-action@v2
+        id: changelog
+        with:
+          fromTag: ${{ inputs.previousTag }}
+          toTag: ${{ inputs.newTag }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ inputs.newTag }}
+          name: Release ${{ inputs.newTag }}
+          body: ${{ steps.changelog.outputs.changelog }}
+        env:
+          GITHUB_TOKEN: ${{ inputs.gh_token }}
