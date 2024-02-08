@@ -86,6 +86,12 @@ export class ConsoleLogger implements Logger {
 		if (type === LogType.WARN && console.warn) {
 			log = console.warn.bind(console);
 		}
+		if (type === LogType.INFO && console.info) {
+			log = console.info.bind(console);
+		}
+		if (type === LogType.DEBUG && console.debug) {
+			log = console.debug.bind(console);
+		}
 
 		const prefix = `[${type}] ${this._ts()} ${this.name}`;
 		let message = '';
