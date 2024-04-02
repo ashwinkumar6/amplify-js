@@ -20,6 +20,7 @@ export const copy = async (
 		source: { key: sourceKey },
 		destination: { key: destinationKey },
 	} = input;
+	console.log('this is a feat commit');
 
 	assertValidationError(!!sourceKey, StorageValidationErrorCode.NoSourceKey);
 	assertValidationError(
