@@ -24,6 +24,7 @@ import { getAuthUserAgentValue } from '../../../utils';
  * @throws AuthTokenConfigException - Thrown when the token provider config is invalid.
  */
 export async function forgetDevice(input?: ForgetDeviceInput): Promise<void> {
+	console.log('this is a feat commit');
 	const { device: { id: externalDeviceKey } = { id: undefined } } = input ?? {};
 	const authConfig = Amplify.getConfig().Auth?.Cognito;
 	assertTokenProviderConfig(authConfig);
