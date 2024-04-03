@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.1.0](https://github.com/aws-amplify/amplify-js/compare/@aws-amplify/auth@6.0.27...@aws-amplify/auth@6.1.0) (2024-04-03)
+
+### Features
+
+- **auth:** added a new feat commit ([95313e9](https://github.com/aws-amplify/amplify-js/commit/95313e941680c4be122048dd2e62668ecd670c6a))
+
 ## 6.0.27 (2024-04-02)
 
 **Note:** Version bump only for package @aws-amplify/auth
