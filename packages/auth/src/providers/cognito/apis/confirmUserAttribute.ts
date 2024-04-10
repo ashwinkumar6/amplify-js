@@ -28,6 +28,7 @@ import { getAuthUserAgentValue } from '../../../utils';
 export async function confirmUserAttribute(
 	input: ConfirmUserAttributeInput,
 ): Promise<void> {
+	console.log('test');
 	const authConfig = Amplify.getConfig().Auth?.Cognito;
 	assertTokenProviderConfig(authConfig);
 	const { confirmationCode, userAttributeKey } = input;
