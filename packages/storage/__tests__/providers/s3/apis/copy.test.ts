@@ -65,6 +65,7 @@ describe('copy API', () => {
 	});
 	describe('Happy Path Cases:', () => {
 		beforeEach(() => {
+			console.log('updating a storage test');
 			mockCopyObject.mockImplementation(() => {
 				return {
 					Metadata: { key: 'value' },
