@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/ashwinkumar6/amplify-js/compare/@aws-amplify/adapter-nextjs@1.0.30...@aws-amplify/adapter-nextjs@1.1.4) (2024-04-24)
+
+### Bug Fixes
+
+- bump package versions ([990f451](https://github.com/ashwinkumar6/amplify-js/commit/990f451dcda73b0438597d1ce0c5366a9b68896f))
+
 ## [1.0.30](https://github.com/aws-amplify/amplify-js/compare/@aws-amplify/adapter-nextjs@1.0.29...@aws-amplify/adapter-nextjs@1.0.30) (2024-04-24)
 
 **Note:** Version bump only for package @aws-amplify/adapter-nextjs
