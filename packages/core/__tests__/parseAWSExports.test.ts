@@ -27,6 +27,10 @@ describe('parseAWSExports', () => {
 			items: ['geoJSSearchExample'],
 			default: 'geoJSSearchExample',
 		},
+		geofenceCollections: {
+			items: ['geofenceCollection-dev'],
+			default: 'geofenceCollection-dev',
+		},
 		region,
 	};
 	const amazonLocationServiceV4 = {
@@ -41,13 +45,13 @@ describe('parseAWSExports', () => {
 			},
 			default: 'geoJsExampleMap1',
 		},
-		search_indices: {
-			items: ['geoJSSearchExample'],
-			default: 'geoJSSearchExample',
-		},
 		searchIndices: {
 			items: ['geoJSSearchExample'],
 			default: 'geoJSSearchExample',
+		},
+		geofenceCollections: {
+			items: ['geofenceCollection-dev'],
+			default: 'geofenceCollection-dev',
 		},
 		region,
 	};
