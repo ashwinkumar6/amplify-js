@@ -20,17 +20,15 @@ class MemoryStorage implements KeyValueStorageInterface {
 }
 
 describe('Loading tokens', () => {
-	let isValidCognitoTokenSpy: jest.SpyInstance<any>;
-	beforeEach(() => {
-		isValidCognitoTokenSpy = jest
-			.spyOn(coreUtils, 'isValidCognitoToken')
-			.mockReturnValue(Promise.resolve(true));
-	});
 	afterEach(() => {
-		isValidCognitoTokenSpy.mockClear();
+		jest.resetAllMocks();
 	});
 
 	it('should load tokens from store', async () => {
+		const isValidCognitoTokenSpy = jest
+			.spyOn(coreUtils, 'isValidCognitoToken')
+			.mockReturnValue(Promise.resolve(true));
+
 		const tokenStore = new DefaultTokenStore();
 		const memoryStorage = new MemoryStorage();
 		const userPoolClientId = 'abcdefgh';
@@ -105,6 +103,45 @@ describe('Loading tokens', () => {
 		expect(result?.deviceMetadata?.deviceGroupKey).toBe('device-group-key');
 		expect(result?.deviceMetadata?.randomPassword).toBe('random-password');
 		expect(result?.deviceMetadata?.deviceKey).toBe('device-key');
+	});
+
+	it('should not load invalid cognito tokens', async () => {
+		jest
+			.spyOn(coreUtils, 'isValidCognitoToken')
+			.mockReturnValue(Promise.resolve(false));
+
+		const tokenStore = new DefaultTokenStore();
+		const memoryStorage = new MemoryStorage();
+		const userPoolClientId = 'abcdefgh';
+		const userSub = 'user123';
+		const userPoolId = 'us-east-1:1111111';
+		const accessToken =
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3MTAyOTMxMzB9.Y';
+		const idToken =
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NSIsIm5hbWUiOiJUZXN0IHVzZXIiLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MTcxMDI5MzEzMH0.Y';
+
+		memoryStorage.setItem(
+			`CognitoIdentityServiceProvider.${userPoolClientId}.LastAuthUser`,
+			userSub,
+		);
+		memoryStorage.setItem(
+			`CognitoIdentityServiceProvider.${userPoolClientId}.${userSub}.accessToken`,
+			accessToken,
+		);
+		memoryStorage.setItem(
+			`CognitoIdentityServiceProvider.${userPoolClientId}.${userSub}.idToken`,
+			idToken,
+		);
+
+		tokenStore.setKeyValueStorage(memoryStorage);
+		tokenStore.setAuthConfig({
+			Cognito: {
+				userPoolId,
+				userPoolClientId,
+			},
+		});
+		const result = await tokenStore.loadTokens();
+		expect(result).toBe(null);
 	});
 });
 
