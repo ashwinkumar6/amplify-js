@@ -1,5 +1,6 @@
 import { KeyValueStorageInterface } from '@aws-amplify/core';
 import { DefaultTokenStore } from '../../../src/providers/cognito';
+import * as coreUtils from '@aws-amplify/core/internals/utils';
 import { decodeJWT } from '@aws-amplify/core/internals/utils';
 
 class MemoryStorage implements KeyValueStorageInterface {
@@ -18,29 +19,39 @@ class MemoryStorage implements KeyValueStorageInterface {
 	}
 }
 
-jest.mock('@aws-amplify/core/internals/utils', () => ({
-	...jest.requireActual('@aws-amplify/core/internals/utils'),
-	isValidCognitoToken: jest.fn().mockReturnValue(true),
-  }));
-
-
 describe('Loading tokens', () => {
+	let isValidCognitoTokenSpy: jest.SpyInstance<any>;
+	beforeEach(() => {
+		isValidCognitoTokenSpy = jest
+			.spyOn(coreUtils, 'isValidCognitoToken')
+			.mockReturnValue(Promise.resolve(true));
+	});
+	afterEach(() => {
+		isValidCognitoTokenSpy.mockClear();
+	});
+
 	it('should load tokens from store', async () => {
 		const tokenStore = new DefaultTokenStore();
 		const memoryStorage = new MemoryStorage();
 		const userPoolClientId = 'abcdefgh';
 		const userSub = 'user123';
+		const userPoolId = 'us-east-1:1111111';
+		const accessToken =
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3MTAyOTMxMzB9.Y';
+		const idToken =
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NSIsIm5hbWUiOiJUZXN0IHVzZXIiLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MTcxMDI5MzEzMH0.Y';
+
 		memoryStorage.setItem(
 			`CognitoIdentityServiceProvider.${userPoolClientId}.LastAuthUser`,
 			userSub,
 		);
 		memoryStorage.setItem(
 			`CognitoIdentityServiceProvider.${userPoolClientId}.${userSub}.accessToken`,
-			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3MTAyOTMxMzB9.Y',
+			accessToken,
 		);
 		memoryStorage.setItem(
 			`CognitoIdentityServiceProvider.${userPoolClientId}.${userSub}.idToken`,
-			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3MTAyOTMxMzB9.Y',
+			idToken,
 		);
 		memoryStorage.setItem(
 			`CognitoIdentityServiceProvider.${userPoolClientId}.${userSub}.refreshToken`,
@@ -66,18 +77,29 @@ describe('Loading tokens', () => {
 		tokenStore.setKeyValueStorage(memoryStorage);
 		tokenStore.setAuthConfig({
 			Cognito: {
-				userPoolId: 'us-east-1:1111111',
+				userPoolId,
 				userPoolClientId,
 			},
 		});
 		const result = await tokenStore.loadTokens();
 
-		expect(result?.accessToken.toString()).toBe(
-			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3MTAyOTMxMzB9.Y',
-		);
-		expect(result?.idToken?.toString()).toBe(
-			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3MTAyOTMxMzB9.Y',
-		);
+		// check if access and id token are valid
+		expect(isValidCognitoTokenSpy).toHaveBeenCalledTimes(2);
+		expect(isValidCognitoTokenSpy).toHaveBeenCalledWith({
+			userPoolId,
+			clientId: userPoolClientId,
+			token: accessToken,
+			tokenType: 'access',
+		});
+		expect(isValidCognitoTokenSpy).toHaveBeenCalledWith({
+			userPoolId,
+			clientId: userPoolClientId,
+			token: idToken,
+			tokenType: 'id',
+		});
+
+		expect(result?.accessToken.toString()).toBe(accessToken);
+		expect(result?.idToken?.toString()).toBe(idToken);
 		expect(result?.clockDrift).toBe(10);
 		expect(result?.refreshToken).toBe('dsasdasdasdasdasdasdasd');
 		expect(result?.deviceMetadata?.deviceGroupKey).toBe('device-group-key');
