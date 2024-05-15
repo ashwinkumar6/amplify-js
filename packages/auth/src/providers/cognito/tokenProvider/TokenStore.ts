@@ -4,6 +4,7 @@ import { AuthConfig, KeyValueStorageInterface } from '@aws-amplify/core';
 import {
 	assertTokenProviderConfig,
 	decodeJWT,
+	isValidCognitoToken,
 } from '@aws-amplify/core/internals/utils';
 
 import { AuthError } from '../../../errors/AuthError';
@@ -57,10 +58,28 @@ export class DefaultTokenStore implements AuthTokenStore {
 			}
 
 			const accessToken = decodeJWT(accessTokenString);
-			const itString = await this.getKeyValueStorage().getItem(
+			const idString = await this.getKeyValueStorage().getItem(
 				authKeys.idToken,
 			);
-			const idToken = itString ? decodeJWT(itString) : undefined;
+
+			const isAccessTokenValid = await this.isTokenValid(
+				accessTokenString,
+				'access',
+			);
+			// TODO: is this correct ?
+			const isIdTokenValid = idString
+				? await this.isTokenValid(idString, 'id')
+				: true;
+
+			// TODO: confirm error message
+			if (!isAccessTokenValid || !isIdTokenValid) {
+				throw new AuthError({
+					name: 'InvalidTokenException',
+					message: 'Token is invalid',
+				});
+			}
+
+			const idToken = idString ? decodeJWT(idString) : undefined;
 
 			const refreshToken =
 				(await this.getKeyValueStorage().getItem(authKeys.refreshToken)) ??
@@ -221,6 +240,22 @@ export class DefaultTokenStore implements AuthTokenStore {
 			'username';
 
 		return lastAuthUser;
+	}
+
+	private async isTokenValid(
+		token: string,
+		tokenType: 'access' | 'id',
+	): Promise<boolean> {
+		const userPoolId = this.authConfig?.Cognito?.userPoolId;
+		const clientId = this.authConfig?.Cognito?.userPoolClientId;
+		if (!userPoolId || !clientId) return false;
+
+		return isValidCognitoToken({
+			clientId,
+			userPoolId,
+			tokenType,
+			token,
+		});
 	}
 }
 
