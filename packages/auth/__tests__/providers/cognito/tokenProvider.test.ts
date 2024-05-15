@@ -18,6 +18,12 @@ class MemoryStorage implements KeyValueStorageInterface {
 	}
 }
 
+jest.mock('@aws-amplify/core/internals/utils', () => ({
+	...jest.requireActual('@aws-amplify/core/internals/utils'),
+	isValidCognitoToken: jest.fn().mockReturnValue(true),
+  }));
+
+
 describe('Loading tokens', () => {
 	it('should load tokens from store', async () => {
 		const tokenStore = new DefaultTokenStore();
