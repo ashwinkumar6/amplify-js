@@ -33,7 +33,8 @@
 		"publish:verdaccio": "lerna publish --canary --force-publish --no-push --dist-tag=unstable --preid=unstable --yes",
 		"generate-metadata": "git rev-parse --short HEAD > packages/core/metadata && git commit -am 'chore(release): Set core metadata [skip release]'",
 		"ts-coverage": "lerna run ts-coverage",
-		"prepare": "husky && ./scripts/set-preid-versions.sh"
+		"prepare": "husky && ./scripts/set-preid-versions.sh",
+		"publish:test": "lerna publish --conventional-commits --message 'chore(release): Publish [skip release]'"
 	},
 	"workspaces": {
 		"packages": [

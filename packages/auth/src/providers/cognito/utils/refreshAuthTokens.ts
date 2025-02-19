@@ -58,8 +58,12 @@ const refreshAuthTokensFunction: TokenRefresher = async ({
 			AuthFlow: 'REFRESH_TOKEN_AUTH',
 			AuthParameters,
 			UserContextData,
+			ClientMetadata: {
+				test: 'foo',
+			},
 		},
 	);
+	console.log('refreshAuth hit !!!', AuthenticationResult);
 
 	const accessToken = decodeJWT(AuthenticationResult?.AccessToken ?? '');
 	const idToken = AuthenticationResult?.IdToken
