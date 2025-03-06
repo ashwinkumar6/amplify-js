@@ -6,7 +6,7 @@ runs:
   steps:
     - name: Start verdaccio
       run: |
-        npx verdaccio@5.25.0 &
+        npx verdaccio@6.0.5 -c amplify-js/verdaccio-config.yaml &
         while ! nc -z localhost 4873; do
           echo "Verdaccio not running yet"
           sleep 1
@@ -15,17 +15,6 @@ runs:
         # Run your commands after verdaccio is up and running
         echo "Verdaccio is up and running, proceeding with the script..."
       shell: bash
-    - name: Install and run npm-cli-login
-      shell: bash
-      env:
-        NPM_REGISTRY: http://localhost:4873/
-        NPM_USER: verdaccio
-        NPM_PASS: verdaccio
-        NPM_EMAIL: verdaccio@amplify.js
-      run: |
-        npm i -g npm-cli-adduser
-        npm-cli-adduser
-        sleep 1
     - name: Configure registry and git
       shell: bash
       working-directory: ./amplify-js

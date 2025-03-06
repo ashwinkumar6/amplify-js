@@ -1,0 +1,26 @@
+storage: ./storage
+
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+
+packages:
+  '@*/*':
+    access: $anonymous
+    publish: $anonymous
+    unpublish: $anonymous
+    proxy: npmjs
+  '**':
+    access: $anonymous
+    publish: $anonymous
+    unpublish: $anonymous
+    proxy: npmjs
+
+server:
+  keepAliveTimeout: 60
+
+middlewares:
+  audit:
+    enabled: true
+
+log: { type: stdout, format: pretty, level: http }
