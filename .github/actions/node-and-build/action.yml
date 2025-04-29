@@ -13,6 +13,13 @@ runs:
         node-version: 20
       env:
         SEGMENT_DOWNLOAD_TIMEOUT_MINS: 2
+    - name: Setup yarn berry
+      shell: bash
+      run: |
+        npm install -g corepack
+        corepack enable
+        corepack prepare yarn@4.9.0 --activate
+        yarn -v
     - uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
       id: cache-build-artifacts
       with:
@@ -36,11 +43,11 @@ runs:
       run: yarn
       shell: bash
       working-directory: ./amplify-js
-    - name: Bootstrap
-      if: inputs.is-prebuild != 'true' || steps.cache-build-artifacts.outputs.cache-hit != 'true'
-      run: yarn bootstrap
-      shell: bash
-      working-directory: ./amplify-js
+    # - name: Bootstrap
+    #   if: inputs.is-prebuild != 'true' || steps.cache-build-artifacts.outputs.cache-hit != 'true'
+    #   run: yarn bootstrap
+    #   shell: bash
+    #   working-directory: ./amplify-js
     - name: Build packages
       if: steps.cache-build-artifacts.outputs.cache-hit != 'true'
       run: yarn build
